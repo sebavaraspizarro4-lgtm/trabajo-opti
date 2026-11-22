@@ -95,20 +95,22 @@ ax.set_xlabel("x (km)"); ax.set_ylabel("y (km)")
 ax.set_title(f"Mapa de la comuna (semilla {seed})")
 ax.set_aspect("equal"); ax.grid(alpha=0.3); ax.legend(loc="lower left", fontsize=9)
 
-os.makedirs("informe", exist_ok=True)
-plt.savefig("informe/mapa.png", dpi=200, bbox_inches="tight")
+os.makedirs("informe", exist_ok=True)                            # crea la carpeta informe si no existe
+plt.savefig("informe/mapa.png", dpi=200, bbox_inches="tight")    # guarda el mapa base como imagen para el informe
 
+# Guarda los datos generados en datos.json, para que modelo.py y graficos.py
+# los lean sin tener que volver a ejecutar el generador.
 datos = {
-    "g": generacion.tolist(),             
-    "K": capacidad.tolist(),              
-    "F": costo_fijo.tolist(),             
-    "c": int(costo_ton_km),              
-    "d": distancia.tolist(),              
-    "sector_sitio": sitio_sector.tolist(),
-    "sector_xy": sector_xy.tolist(),   
-    "sitio_xy": sitio_xy.tolist(),     
+    "g": generacion.tolist(),              # generación de cada sector (ton/semana), sectores 1..7
+    "K": capacidad.tolist(),               # capacidad de cada sitio (ton/semana), sitios 1..9
+    "F": costo_fijo.tolist(),              # costo fijo anual de cada sitio (M$/año), sitios 1..9
+    "c": int(costo_ton_km),                # costo de transporte ($ por tonelada-km)
+    "d": distancia.tolist(),               # distancias sector-sitio (km)
+    "sector_sitio": sitio_sector.tolist(), # sector donde se ubica cada sitio
+    "sector_xy": sector_xy.tolist(),       # coordenadas (km) de cada sector, usadas en los mapas
+    "sitio_xy": sitio_xy.tolist(),         # coordenadas (km) de cada sitio, usadas en los mapas
 }
 with open("datos.json", "w") as f:
-    json.dump(datos, f, indent=2)
+    json.dump(datos, f, indent=2)          
 
 plt.show()
