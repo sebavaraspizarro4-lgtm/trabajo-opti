@@ -1,5 +1,4 @@
-#Como Requisito: python -m pip install "pulp==2.9.0" pandas numpy matplotlib
-#Ya que en esta versión de pulp funciona la API usada.
+# Requisitos: python -m pip install pulp pandas numpy matplotlib
 import pandas as pd
 import runpy
 from modelo import cargar_datos, resolver
